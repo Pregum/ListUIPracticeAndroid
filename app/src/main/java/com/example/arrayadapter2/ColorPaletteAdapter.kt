@@ -47,6 +47,72 @@ class ColorPaletteAdapter(
      */
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 
+        // baseAdapterの場合
+        // return getViewOnlyBaseAdapter(position, convertView)
+
+        // baseAdapter + ViewHolderの場合
+        return getViewWithViewHolder(position, convertView)
+    }
+
+    private fun getViewWithViewHolder(position: Int, convertView: View?): View {
+
+        var myViewHolder: MyViewHolder
+        var view = convertView
+        if (view == null) {
+            view = _inflater.inflate(_layoutId, null)
+
+            myViewHolder = this.createViewHolder(view)
+            view.tag = myViewHolder
+        }
+
+        myViewHolder = view?.tag as MyViewHolder
+
+        val currentPalette = _colorPaletteData[position]
+        val currentColorValue = currentPalette["colorValue"]
+        val currentColorCode = currentPalette["colorCode"]
+        val currentTextColor = currentPalette["textColor"]
+
+        myViewHolder.apply {
+            this.colorName.also {
+                it.setBackgroundColor(Color.parseColor(currentColorValue))
+            }
+
+            this.colorCode.also {
+                it.setText(currentColorCode)
+                it.setTextColor(Color.parseColor(currentTextColor))
+            }
+
+            this.colorValue.also {
+                it.setText(currentColorValue)
+                it.setTextColor(Color.parseColor(currentTextColor))
+            }
+        }
+
+        return view
+    }
+
+    private fun createViewHolder(view: View): MyViewHolder {
+        val colorName = view.findViewById<TextView>(R.id.color)
+        val colorCode = view.findViewById<TextView>(R.id.color_code)
+        val textColor = view.findViewById<TextView>(R.id.color_value)
+
+        return MyViewHolder(colorName, colorCode, textColor)
+    }
+
+    private class MyViewHolder(colorName: TextView, colorCode: TextView, colorValue: TextView) {
+        var colorName: TextView
+        var colorCode: TextView
+        var colorValue: TextView
+
+        init {
+            this.colorName = colorName
+            this.colorCode = colorCode
+            this.colorValue = colorValue
+        }
+    }
+
+    private fun getViewOnlyBaseAdapter(position: Int, convertView: View?): View {
+
         /*
             Viewを再利用できるか判定する
             nullであればViewを生成する
