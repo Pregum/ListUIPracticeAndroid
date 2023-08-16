@@ -3,6 +3,7 @@ package com.example.arrayadapter2
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import android.widget.ListView
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,5 +51,9 @@ class MainActivity : AppCompatActivity() {
             android.R.layout.simple_list_item_1,
             platformVersions
         )
+
+        val listView: ListView = findViewById(R.id.platform_version_list)
+
+        listView.adapter = arrayAdapter
     }
 }
