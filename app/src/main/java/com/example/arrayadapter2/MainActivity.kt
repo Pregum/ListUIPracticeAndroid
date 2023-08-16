@@ -13,9 +13,40 @@ import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
-    private val dataset: List<String> = (0 ..20).map {
-        String.format(Locale.ENGLISH, "Data_0%d", it)
+//    private val dataset: List<String> = (0 ..20).map {
+//        String.format(Locale.ENGLISH, "Data_0%d", it)
+//    }
+
+    companion object {
+        val names = listOf<String>(
+            "syuhizei_8percent",
+            "money_kokusai",
+            "medical_machine_enshin_bunriki",
+            "takedajou",
+            "computer_kurayami_man",
+            "panda_iruka_irowake_iruka",
+            "hakken_ufo",
+            "mdical_kusuri_medicine",
+            "mark_kokusan",
+            "buildng_iwate_ginkou"
+        )
+
+        val photos = listOf<Int>(
+            R.drawable.syouhizei_8percent,
+            R.drawable.money_kokusai,
+            R.drawable.medical_machine_enshin_bunriki,
+            R.drawable.takedajou,
+            R.drawable.computer_kurayami_man,
+            R.drawable.panda_iruka_irowake_iruka,
+            R.drawable.hakken_ufo,
+            R.drawable.medical_kusuri_medicine,
+            R.drawable.mark_kokusan,
+            R.drawable.buildng_iwate_ginkou
+        )
+
+
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -27,11 +58,16 @@ class MainActivity : AppCompatActivity() {
         recyclerView.setHasFixedSize(true)
 
         // use a linear layout manager
-        val rLayoutManager: LayoutManager = LinearLayoutManager(this)
-
+        val rLayoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = rLayoutManager
+        val emails = mutableListOf<String>()
 
-        val adapter = MyAdapter(dataset)
+        for (s in names) {
+            val str = String.format(Locale.ENGLISH, "%s@gmail.com", s)
+            emails.add(str)
+        }
+
+        val adapter = MyAdapter(photos, names, emails)
         recyclerView.adapter = adapter
     }
 }
