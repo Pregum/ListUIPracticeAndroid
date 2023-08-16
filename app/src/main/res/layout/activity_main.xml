@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
     <ListView
-        android:id="@+id/android_version_list"
+        android:id="@+id/color_palette_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
